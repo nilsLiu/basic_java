@@ -6,7 +6,7 @@ public class ExceptionTest2 {
         try {
             test();
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            throw new MyException("非法");
         }
     }
 
