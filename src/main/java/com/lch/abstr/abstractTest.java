@@ -30,6 +30,7 @@ public class abstractTest {
         }
 
         public abstract void Work();
+        // 测试
     }
 
     /**
