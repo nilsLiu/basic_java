@@ -10,6 +10,7 @@ package com.lch.thread;
 
 /**
  * 三个窗口卖票，一共100张票
+ * 使用继承Thread类的方式
  */
 
 class WindowsThread extends Thread {
