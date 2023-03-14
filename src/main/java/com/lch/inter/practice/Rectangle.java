@@ -1,4 +1,4 @@
-package inter.practice;
+package com.lch.inter.practice;
 
 public class Rectangle {
     int length;
