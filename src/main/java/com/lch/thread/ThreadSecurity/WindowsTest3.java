@@ -20,7 +20,7 @@ class WindowThread3 implements Runnable {
     @Override
     public void run() {
         while (true) {
-            synchronized (this) {
+            synchronized (WindowThread3.class) {
                 if (ticketCount > 0) {
                     try {
                         Thread.sleep(50);
