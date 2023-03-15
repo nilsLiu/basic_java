@@ -1,4 +1,4 @@
-package inter.practice;
+package com.lch.inter.practice;
 
 public class ComparableCircle extends Circle implements CompareObject {
 

@@ -1,4 +1,4 @@
-package inter.practice;
+package com.lch.inter.practice;
 
 public class ComparableRectangle extends Rectangle implements CompareObject{
     public ComparableRectangle(int length, int width) {
