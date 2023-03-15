@@ -26,7 +26,7 @@ class SaveThread implements Runnable {
 }
 
 
-public class saveMoney {
+public class SaveMoney {
     public static void main(String[] args) {
         SaveThread saveThread = new SaveThread();
         new Thread(saveThread).start();
