@@ -16,13 +16,14 @@ package com.lch.thread.ThreadSecurity;
 class WindowThread3 implements Runnable {
     private int ticketCount = 100;
     Object object = new Object();
+
     @Override
     public void run() {
         while (true) {
-            synchronized (object) {
+            synchronized (this) {
                 if (ticketCount > 0) {
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(50);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -36,6 +37,7 @@ class WindowThread3 implements Runnable {
         }
     }
 }
+
 
 public class WindowsTest3 {
     public static void main(String[] args) {
