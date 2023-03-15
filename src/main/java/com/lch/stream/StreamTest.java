@@ -2,7 +2,9 @@ package com.lch.stream;
 
 import java.util.*;
 import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StreamTest {
     public static void main(String[] args) {
@@ -39,12 +41,31 @@ public class StreamTest {
 
 //        testFindFirst();
 
-        testReduce();
+//        testReduce();
+
+        testThreadStream();
+    }
+
+    private static void testThreadStream() {
+        Stream<Integer> stream = Stream.of(1,2,3,4,5);
+
+//        Integer sum = stream.filter(num -> num > 1)
+//                .reduce((result, ele) -> result + ele)
+//                .get();
+
+
+        Integer sum1 = stream.parallel()
+                .peek(num -> System.out.println(num + "---" + Thread.currentThread().getName()))
+                .filter(num -> num > 1)
+                .reduce(Integer::sum)
+                .get();
+        System.out.println(sum1);
     }
 
     private static void testReduce() {
         List<Author> authors = getAuthors();
 
+        authors.parallelStream();
         //求所有作家年龄之和
         Integer sum = authors.stream()
                 .map(author -> author.getAge())
