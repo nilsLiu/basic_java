@@ -2,6 +2,7 @@ package com.lch.thread;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @BelongsProject: basic_java
@@ -21,13 +22,17 @@ class NumThread implements Runnable{
 }
 public class ThreadPool {
     public static void main(String[] args) {
-
+        //提供指定线程数量的线程池
         ExecutorService executorService = Executors.newFixedThreadPool(10);
-        //提交 适合使用Runnable
-        executorService.submit(new NumThread());
-        //执行 适合使用Callable
-//        executorService.execute();
+        //设置线程池的属性
+        ThreadPoolExecutor service1 = (ThreadPoolExecutor) executorService;
+//        service1.setCorePoolSize(15);
 
+        // 适合使用Runnable的操作
+        executorService.submit(new NumThread());
+        // 适合使用Callable
+//        executorService.execute();
+        //关闭连接池
         executorService.shutdown();
     }
 }
