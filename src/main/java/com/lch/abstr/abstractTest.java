@@ -29,6 +29,7 @@ public class abstractTest {
             this.salary = salary;
         }
 
+
         public abstract void Work();
         // 测试
     }
