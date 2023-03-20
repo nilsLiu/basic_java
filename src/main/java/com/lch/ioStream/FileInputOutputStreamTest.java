@@ -15,7 +15,7 @@ import java.io.*;
 public class FileInputOutputStreamTest {
 
     @Test
-    //实现对图片的复制
+    //瀹炵幇瀵瑰浘鐗囩殑澶嶅埗
     public void testFileInputOutputStream() {
         FileInputStream inputStream = null;
         FileOutputStream outputStream = null;

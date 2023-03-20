@@ -13,6 +13,10 @@ import java.io.*;
  */
 
 public class BufferedTest {
+
+    public static void main(String[] args) {
+
+    }
     @Test
     public void BufferedStreamTest() {
         BufferedInputStream bfIn = null;
@@ -21,14 +25,14 @@ public class BufferedTest {
         try {
             File pic1 = new File("D:\\idea_project\\basic_java\\src\\main\\java\\com\\lch\\ioStream\\cnn.png");
             File pic2 = new File("src/main/java/com/lch/ioStream/cnn_copy2.png");
-            //½ÚµãÁ÷
+            //ï¿½Úµï¿½ï¿½ï¿½
             FileInputStream inputStream = new FileInputStream(pic1);
             FileOutputStream outputStream = new FileOutputStream(pic2);
-            //»º³åÁ÷
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             bfIn = new BufferedInputStream(inputStream);
             bfOut = new BufferedOutputStream(outputStream);
 
-            //¸´ÖÆ²Ù×÷
+            //ï¿½ï¿½ï¿½Æ²ï¿½ï¿½ï¿½
             byte bBuf[] = new byte[5];
             int len;
             while ((len = bfIn.read(bBuf)) != -1) {
@@ -37,8 +41,8 @@ public class BufferedTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
-            //×ÊÔ´¹Ø±Õ£ºÏÈ¹Ø±ÕÍâ²ãµÄÁ÷£¬ÔÙ¹Ø±ÕÄÚ²ãµÄÁ÷
-            //ÔÙ¹Ø±ÕÍâ²ãÁ÷µÄÍ¬Ê±£¬ÄÚ²ãÁ÷Ò²»á×Ô¶¯¹Ø±Õ£¬ÄÚ²ãÁ÷µÄ¹Ø±Õ¿ÉÒÔÊ¡ÂÔ
+            //ï¿½ï¿½Ô´ï¿½Ø±Õ£ï¿½ï¿½È¹Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¹Ø±ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½
+            //ï¿½Ù¹Ø±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ø±Õ£ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½Ä¹Ø±Õ¿ï¿½ï¿½ï¿½Ê¡ï¿½ï¿½
             try {
                 if (bfOut != null)
                     bfOut.close();
@@ -53,5 +57,53 @@ public class BufferedTest {
             }
 
         }
+    }
+
+    //Ê¹ï¿½ï¿½BufferedReaderï¿½ï¿½BufferedWriterÊµï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
+    @Test
+    public void BufferedReaderWriterTest() {
+        BufferedReader bR = null;
+        BufferedWriter bW = null;
+        try {
+            bR = new BufferedReader(new FileReader(new File("D:\\idea_project\\basic_java\\src\\main\\java\\com\\lch\\ioStream\\mu.txt")));
+            bW = new BufferedWriter(new FileWriter(new File("src/main/java/com/lch/ioStream/mu2.txt")));
+
+            //ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½
+
+            //ï¿½ï¿½Ê½1 Ê¹ï¿½ï¿½char[]
+//            char[] cbuf = new char[1024];
+//            int len;
+//            while ((len = bR.read(cbuf)) != -1) {
+//                bW.write(cbuf, 0, len);
+//            }
+
+            //ï¿½ï¿½Ê½2 Ê¹ï¿½ï¿½String
+            String data;
+            while ((data = bR.readLine()) != null) {
+//                bW.write(data + "\n"); //dataï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½
+
+                bW.write(data); //dataï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½
+                bW.newLine(); //ï¿½á¹©ï¿½ï¿½ï¿½ÐµÄ²ï¿½ï¿½ï¿½
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            //ï¿½Ø±ï¿½ï¿½ï¿½Ô´
+
+            try {
+                if (bW != null)
+                    bW.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                if (bR != null)
+                    bR.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
     }
 }

@@ -13,13 +13,13 @@ public enum Weak implements Info {
     MONDAY("1") {
         @Override
         public void show() {
-            System.out.println("ĞÇÆÚÒ»");
+            System.out.println("æ˜ŸæœŸä¸€");
         }
     },
     TUESDAY("2") {
         @Override
         public void show() {
-            System.out.println("ĞÇÆÚ¶ş");
+            System.out.println("æ˜ŸæœŸäºŒ");
         }
     };
 
@@ -47,7 +47,7 @@ public enum Weak implements Info {
 
 //    @Override
 //    public void show() {
-//        System.out.println("ÕâÊÇshow½Ó¿Ú");
+//        System.out.println("è¿™æ˜¯showæ¥å£");
 //    }
 }
 

@@ -1,0 +1,400 @@
+# 1. ��������
+��������ض���������ĳ�����Ա�д��һ��ָ��ļ��ϡ�һ�ξ�̬�Ĵ��롣
+���̣��������е�һ������
+�̣߳�����ϸ��Ϊ�̣߳��ǳ����ڲ���һ��ִ��·����
+
+# 2. ���̵߳��ŵ�
+1. ��߳������Ӧ��
+2. ��߼����ϵͳCPU�������ʡ�
+3. ���Ƴ���ṹ��
+
+# 3. ���̵߳�ʹ��
+
+## 3.1 ���̴߳�����ʽ1�� �̳�Thread��
+
+1. ����һ���̳���Tread�������
+2. ��дThread���run( )
+3. ����Thread�������Ķ���
+4. ͨ���˶������start( )
+	1. ������ǰ�߳�
+	2. ���õ�ǰ�̵߳� run( ) ����
+	3. ֻ������һ�� strat( )
+
+```java
+class MyThread extends Thread{
+    @Override
+    public void run() {
+        System.out.println("����MyThread");
+    }
+}
+public class ThreadTest {
+
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread();
+        t1.start();
+    }
+}
+```
+
+�򴴽�Thread�����������ķ�ʽ��
+```java
+new Thread(() -> {
+    for (int i = 1; i <= 100; i += 2) {
+        System.out.println(Thread.currentThread().getName() + ":" + i);
+    }
+}).start();
+```
+
+## 3.2 ���̴߳�����ʽ2�� ʵ��Runnable�ӿڵ���
+1. ����һ��ʵ����Runna�ӿڵ���
+2. ʵ����ȥʵ��Runable�еĳ��󷽷���run( )
+3. ����ʵ����Ķ���
+4. ���˶�����Ϊ�������ݵ�Thread��Ĺ������У�����Thread��Ķ���
+5. ͨ��Thread��Ķ������start( )
+
+```java
+class AThread implements Runnable{
+
+    @Override
+    public void run() {
+        System.out.println("����ʵ��Runnable���߳�");
+    }
+}
+public class ThreadTest3 {
+    public static void main(String[] args) {
+        AThread aThread = new AThread();
+        //��ǰ�̵߳�run() -> ������Runnable���͵�target��run()����
+        new Thread(aThread).start();
+    }
+}
+```
+
+����ѡ��ʵ��Runnable�ӿڵķ�ʽ��
+1. û�е��̳��Եľ�����
+2. ���ʺϴ������̹߳������ݵ����
+
+## 3.4 ���̴߳�����ʽ3��JDK5���� ʵ��Callable�ӿ�
+1. ����һ��ʵ��Callable��ʵ����
+2. ʵ��call�����������߳���Ҫִ�еĲ���������call( ) ��
+3. ����callable�ӿ�ʵ����Ķ���
+4. ����callable�ӿ�ʵ����Ķ��󴫵ݵ�FutureTask�������У�����FutureTask�Ķ���
+5. ��FutureTask�Ķ�����Ϊ�������ݵ�Thread��Ĺ������У�����Tread���󣬲�����start( ) ������
+6. ��ȥCallable��call�����ķ���ֵ
+
+```java
+class NumThread implements Callable{
+
+    //2. ʵ��call�����������߳���Ҫִ�еĲ���������call( ) ��
+    @Override
+    public Object call() throws Exception {
+        int sum = 0;
+        for (int i = 0; i < 100; i++) {
+            sum += i;
+            System.out.println(sum);
+        }
+        return sum;
+    }
+}
+public class CallableTest {
+    public static void main(String[] args) {
+
+        //3. ����callable�ӿ�ʵ����Ķ���
+        NumThread numThread = new NumThread();
+        //4. ����callable�ӿ�ʵ����Ķ��󴫵ݵ�FutureTask�������У�����FutureTask�Ķ���
+        FutureTask futureTask = new FutureTask<>(numThread);
+        //5. ��FutureTask�Ķ�����Ϊ�������ݵ�Thread��Ĺ������У�����Tread���󣬲�����start( ) ������
+        new Thread(futureTask).start();
+        try {
+            //get �����ķ���ֵΪFutureTask����������callableʵ������д��call()�ķ���ֵ
+            Object o = futureTask.get();
+            System.out.println(Thread.currentThread().getName() + "  sum:"+ o);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+```
+
+Callable��Runnable�Աȣ�
+1. call���������з���ֵ
+2. call���������׳��쳣��������Ĳ������񣬻�ȡ�쳣��Ϣ
+3. Callable֧�ַ���
+
+## 3.5 ���̴߳�����ʽ4��JDK5���� �̳߳�
+
+�������������������١�ʹ�����ر�����Դ�����粢������µ��̣߳�������Ӱ��ܴ�
+˼·����ǰ�����ö���̣߳������̳߳��У�ʹ��ʱֱ�ӻ�ȡ��ʹ����Żس��С����Ա���Ƶ���������١�ʵ���ظ����á�
+
+�ô���
+1. �����Ӧ�ٶȣ������˴������̵߳�ʱ�䣩
+2. ������Դ���ģ��ظ������̳߳����̣߳�����Ҫÿ�ζ�������
+3. �����̹߳���
+
+corePoolSize�����ĳصĴ�С
+maximumPoolSize������߳���
+keepAliveTime���߳�û������ʱ��ౣ�ֶ೤ʱ������ֹ
+
+```java
+class NumThread implements Runnable{
+    @Override
+    public void run() {
+        for (int i = 0; i < 100; i++) {
+            System.out.println(Thread.currentThread().getName() + "----" + i);
+        }
+    }
+}
+public class ThreadPool {
+    public static void main(String[] args) {
+        //�ṩָ���߳��������̳߳�
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        //�����̳߳ص�����
+        ThreadPoolExecutor service1 = (ThreadPoolExecutor) executorService;
+//        service1.setCorePoolSize(15);
+
+        // �ʺ�ʹ��Runnable�Ĳ���
+        executorService.submit(new NumThread());
+        // �ʺ�ʹ��Callable
+//        executorService.execute();
+        //�ر����ӳ�
+        executorService.shutdown();
+    }
+}
+```
+
+
+# 4. Thread ���÷���
+
+1. **start( )** : ������ǰ�̣߳����õ�ǰ�̵߳�run( )
+2. **run( )** : ͨ����Ҫ��дThread���еĴ˷��������������߳�Ҫִ�еĲ��������ڴ˷�����
+3. **currentThread( )** : ��̬���������ص�ǰִ�д�����߳�
+4. **getName( )** : ��ȡ��ǰ�̵߳�����
+5. **setName( )** : ���õ�ǰ�̵߳�����
+6.  **yield( )** : �ͷŵ�ǰcpu��ִ��Ȩ
+7.  **join( )** : ���߳�A�е����߳�B�� join( ), ��ʱ�߳�A�ͽ�������״̬��ֱ���߳�B��ȫִ����֮���߳�A�Ž�������״̬
+8. **stop( )** : �ѹ�ʱ��ǿ�ƽ�����ǰ�̡߳�
+9. **sleep(long millitime)** : �õ�ǰ�߳�˯��ָ����millitime ���롣��ָ��millitime����ʱ���ڣ���ǰ�߳�������״̬
+10. isAlive( ) : �ж��߳��Ƿ���
+
+# 5. �̵߳����ȼ�
+
+MAX_PRIORITY: 10
+MIN_PRIORITY: 1
+NORN_PRIORITY: 5
+
+��ȡ�������̵߳����ȼ�:
+**getPriority( )**
+**setPriority( )**
+
+# 6. �̵߳���������
+![[�̵߳���������.png]]
+
+1. �½�����һ��Thread���������Ķ�������������ʱ���������̶߳������½�״̬
+2. �����������½�״̬���̱߳� **start( )** �󣬽������̶߳��еȴ�CPUʱ��Ƭ����ʱ�����߱������е�������ֻ��û���䵽CPU��Դ
+3. ���У����������̱߳����Ȳ����CPU��Դʱ�����������״̬��**run( )** �����������̵߳Ĳ����͹���
+4. ��������������������£�����Ϊ�����ִ�������������ʱ���ó�CPU����ʱ��ֹ�Լ���ִ�У���������״̬
+5. �������߳����������ȫ���������̱߳���ǰǿ���Ե���ֹ������쳣���½���
+
+
+# 7. �߳�ͬ��
+
+Q������߳�ִ�еĲ�ȷ���Ե��½�����ȶ�������̲߳����Ĳ������ԣ��ƻ����ݡ�
+
+
+## 7.1 ͬ����ʽһ��ͬ�������
+```java
+synchronized(ͬ��������){
+	//��Ҫ��ͬ���Ĵ���
+}
+˵���������������ݵĴ��룬��Ϊ��Ҫ��ͬ���Ĵ���
+�������ݣ�����̹߳�ͬ����������
+```
+
+```java
+synchronized (this) {
+    if (ticketCount > 0) {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(Thread.currentThread().getName() + "�۳�Ʊ��" + ticketCount);
+        ticketCount--;
+    } else {
+        break;
+    }
+}
+```
+˵����
+1. �����������ݵĴ��룬��Ϊ��Ҫ��ͬ���Ĵ���
+2. �������ݣ�����̹߳�ͬ����������
+3. ͬ�����������׳ƣ������κ�һ����Ķ��󣬶����Գ�Ϊ��
+	Ҫ�󣺶����������Ҫͬһ����
+4. ��ʵ��Runnable�ӿڴ������̵߳ķ�ʽ�У�����ʹ��this�䵱ͬ��������
+
+������̵߳İ�ȫ���⣻���ǲ�������ʱ��ֻ����һ���̲߳��룬�����̵߳ȴ����൱�ڵ��̣߳�Ч�ʵ͡�
+
+## 7.2 ͬ����ʽ����ͬ������
+��������������ݵĴ���������������һ�������У����Խ��˷�������ͬ��
+1. ��Ȼʹ��ͬ����������������Ҫ��ʾ����
+2. �Ǿ�̬��ͬ��������ͬ��������Ϊ this
+	��̬��ͬ��������ͬ��������Ϊ��ǰ��
+```java
+private synchronized void show() {  // ͬ���������� .class ��ǰ��
+
+    if (ticketCount > 0) {
+        try {
+            Thread.sleep(50);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        System.out.println(Thread.currentThread().getName() + "�۳�Ʊ��" + ticketCount);
+        ticketCount--;
+    }
+
+}
+```
+
+## 7.3 ͬ����ʽ����Lock������
+ReentrantLockʵ��Lock
+```java
+private int count = 100;
+
+    //ʵ����lock
+    private ReentrantLock lock = new ReentrantLock(true);
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                //������������lock()
+                lock.lock();
+                if (count > 0) {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    System.out.println(Thread.currentThread().getName() + "�۳�" + count);
+                    count--;
+                }else {
+                    break;
+                }
+            } finally {
+                //����unlock()
+                lock.unlock();
+            }
+        }
+    }
+}
+
+public class LockTest {
+    public static void main(String[] args) {
+        Window window1 = new Window();
+        Window window2 = new Window();
+        Window window3 = new Window();
+        new Thread(window1).start();
+        new Thread(window2).start();
+        new Thread(window3).start();
+    }
+```
+
+## 7.4 synchronized �� lock ����ͬ
+ͬ�����߶����Խ���̰߳�ȫ����
+��ͬ��synchronized ������ִ������Ӧ��ͬ��������Զ��ͷ�ͬ����������
+lock��Ҫ�ֶ�����ͬ��������Ҳ���ֶ�����
+
+
+
+# 8. ����
+��ͬ���̷ֱ߳�ռ�öԷ���Ҫ��ͬ����Դ�����������ڵȴ��Է������Լ���Ҫ��ͬ����Դ�����γ����̵߳�������
+1. ���������󣬲�������쳣�����������ʾ��ֻ�����е��̶߳���������״̬���޷�������
+2. ʹ��ͬ��ʱ��������������
+```java
+public static void main(String[] args) {
+
+    StringBuffer sb1 = new StringBuffer();
+    StringBuffer sb2 = new StringBuffer();
+    new Thread(() -> {
+        synchronized (sb1) {
+            sb1.append("a");
+            sb2.append("1");
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            synchronized (sb2) {
+                sb1.append("b");
+                sb2.append("2");
+                System.out.println(sb1);
+                System.out.println(sb2);
+            }
+        }
+
+    }).start();
+
+    new Thread(() -> {
+        synchronized (sb2) {
+            sb1.append("c");
+            sb2.append("3");
+
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            synchronized (sb1) {
+                sb1.append("d");
+                sb2.append("4");
+                System.out.println(sb1);
+                System.out.println(sb2);
+            }
+        }
+    }).start();
+}
+```
+
+# 9. �߳�ͨ��
+�����ӡ��
+**wait( )** : ��ǰ�߳̽�������״̬�����ͷ�ͬ����������
+**notify( )**  �����ѱ�wait��һ���̡߳����ж�����������ȸߵġ�
+**notifyAll( )** ���������б�wait���߳� ��
+
+1. ���ϵķ���������ͬ��������ͬ�������е���
+2. �����߱�����ͬ��������ͬ��������ͬ��������
+
+```java
+synchronized (this) {
+    //�����߳�
+    notify();
+    if (num <= 100) {
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName() + "------"+ num);
+        num++;
+        try {
+            //�߳̽�������״̬
+            wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    } else {
+        break;
+    }
+}
+```
+sleep( ) �� wait( ) ����ͬ
+ͬ�� ִ�з�������ʹ�߳̽�������״̬
+�죺 1. ������λ�ò�ͬ��sleep( ) �� Thread�������ģ�wait( ) ��Object����������
+	    2. ���õķ�Χ��ͬ��sleep( ) �������κ���Ҫ�ĳ���ʹ�ã�wait( ) ������ͬ��������ͬ��������
+	    3. ��ͬ��������ͬ�������У�sleep( )�����ͷ�����wait( ) ���ͷ���
