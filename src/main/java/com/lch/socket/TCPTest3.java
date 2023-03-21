@@ -38,7 +38,19 @@ public class TCPTest3 {
             while ((len = fis.read(buffer)) != -1) {
                 os.write(buffer, 0, len);
             }
+            //关闭数据的输出
+            socket.shutdownOutput();
+
             //接收来自服务器端的数据
+            InputStream is = socket.getInputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] bufferr = new byte[20];
+            int len1;
+            while ((len1 = is.read(bufferr)) != -1) {
+                baos.write(buffer, 0, len1);
+            }
+            System.out.println(baos.toString());
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -73,6 +85,7 @@ public class TCPTest3 {
         Socket socket = null;
         InputStream is = null;
         FileOutputStream fos = null;
+        OutputStream os = null;
         try {
             serverSocket = new ServerSocket(10010);
             socket = serverSocket.accept();
@@ -86,12 +99,21 @@ public class TCPTest3 {
             while ((len = is.read(buffer)) != -1) {
                 fos.write(buffer, 0, len);
             }
-            System.out.println("文件已传输");
 
             //服务器端给予客户端反馈
+            os = socket.getOutputStream();
+            os.write("图片已传输".getBytes());
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
+            try {
+                if (os != null)
+                    fos.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             try {
                 if (fos != null)
                     fos.close();
