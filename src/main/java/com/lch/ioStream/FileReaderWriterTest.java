@@ -16,13 +16,13 @@ public class FileReaderWriterTest {
 
     @Test
     public void testFileReader() {
-        //°Ñhi.txtÎÄ¼þÄÚÈÝ¶ÁÈëµ½³ÌÐòÖÐ£¬²¢Êä³öµ½¿ØÖÆÌ¨
+        //ï¿½ï¿½hi.txtï¿½Ä¼ï¿½ï¿½ï¿½ï¿½Ý¶ï¿½ï¿½ëµ½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¨
         FileReader fileReader = null;
         try {
             File file = new File("D:\\idea_project\\basic_java\\src\\main\\java\\com\\lch\\ioStream\\hi.txt");
-            //×Ö·ûÁ÷
+            //ï¿½Ö·ï¿½ï¿½ï¿½
             fileReader = new FileReader(file);
-            //read()£º·µ»Ø¶ÁÈëµÄÒ»¸ö×Ö·û¡£Èç¹û´ïµ½ÎÄ¼þÄ©Î²£¬·µ»Ø-1
+            //read()ï¿½ï¿½ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ïµ½ï¿½Ä¼ï¿½Ä©Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1
 //        int data = fileReader.read();
 //        while (data != -1){
 //            System.out.print((char) data);
@@ -43,23 +43,23 @@ public class FileReaderWriterTest {
                 e.printStackTrace();
             }
         }
-        //Á÷µÄ¹Ø±Õ
+        //ï¿½ï¿½ï¿½Ä¹Ø±ï¿½
 
     }
 
     @Test
-    //¶Ôread()²Ù×÷Éý¼¶£¬Ê¹ÓÃreadÖØÔØ·½·¨
+    //ï¿½ï¿½read()ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½readï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½
     public void testFileReader1() {
         FileReader fileReader = null;
         try {
             File file = new File("D:\\idea_project\\basic_java\\src\\main\\java\\com\\lch\\ioStream\\hi.txt");
-            //×Ö·ûÁ÷
+            //ï¿½Ö·ï¿½ï¿½ï¿½
             fileReader = new FileReader(file);
-            //read(char[]cbuf):·µ»ØÃ¿´Î¶ÁÈëcbufÊý×éÖÐµÄ×Ö·ûµÄ¸öÊý¡£Èç¹û´ïµ½ÎÄ¼þÄ©Î²£¬·µ»Ø-1
+            //read(char[]cbuf):ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½Î¶ï¿½ï¿½ï¿½cbufï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½Ö·ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ïµ½ï¿½Ä¼ï¿½Ä©Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-1
             char[] cbuf = new char[5];
             int len;
             while ((len = fileReader.read(cbuf)) != -1) {
-                //·½Ê½1
+                //ï¿½ï¿½Ê½1
 //                for (int i = 0; i < len; i++) {
 //                    System.out.print(cbuf[i]);}
                 String s = new String(cbuf, 0, len);
@@ -85,10 +85,10 @@ public class FileReaderWriterTest {
         try {
             File file = new File("D:\\idea_project\\basic_java\\src\\main\\java\\com\\lch\\ioStream\\hi2.txt");
 
-            //Ìá¹©FileWriterµÄ¶ÔÏó£¬ÓÃÓÚÊý¾ÝµÄÐ´³ö
+            //ï¿½á¹©FileWriterï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½Ð´ï¿½ï¿½
             fileWriter = new FileWriter(file, false);
 
-            //Ð´³öµÄ²Ù×÷
+            //Ð´ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
             fileWriter.write("what\n");
             fileWriter.write("whats up!");
         } catch (IOException e) {

@@ -4,7 +4,9 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/lch/enums/Weak.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/lch/ioStream/BufferedTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/lch/ioStream/FileInputOutputStreamTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/lch/ioStream/FileReaderWriterTest.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/lch/ioStream/OthersStreamTest.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/lch/ioStream/mu.txt" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/lch/stream/Author.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/lch/stream/StreamTest.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />

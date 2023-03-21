@@ -2,9 +2,7 @@ package com.lch.ioStream;
 
 import org.testng.annotations.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * @BelongsProject: basic_java
@@ -55,6 +53,19 @@ public class OthersStreamTest {
      */
     @Test
     public void PrintStreamTest() {
+        PrintStream ps1 = null;
+        try {
+            ps1 = new PrintStream("D:\\idea_project\\basic_java\\src\\main\\java\\com\\lch\\ioStream\\hi.txt");
+
+            ps1.println(100);
+            ps1.println('a');
+            ps1.println(true);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps1 != null)
+                ps1.close();
+        }
 
 
     }
